@@ -13,4 +13,4 @@ $ make collect && make register
 ```
 The above should collect all available data and register the results on HDX. The environment variable `HDX_KEY` will need to be setup -- and the key will need access to the respective resources on HDX (`91c78d24-eab3-40b5-ba91-6b29bcda7178` and `748b40dd-7bd3-40a3-941b-e76f0bfbe0eb`).
 
-TESTING CHANGES
+TESTING CHANGES 2
