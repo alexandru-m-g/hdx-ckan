@@ -1,0 +1,2 @@
+include README.md
+recursive-include ckanext/googleauth *.html *.json *.js *.less *.css

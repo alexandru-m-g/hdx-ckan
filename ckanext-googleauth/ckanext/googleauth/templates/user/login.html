@@ -1,0 +1,111 @@
+{% ckan_extends %}
+
+
+
+{% block primary_content %}
+
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '375834589521238',
+                cookie: true,
+                xfbml: true,
+                version: 'v2.8'
+            });
+
+            FB.AppEvents.logPageView();
+
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        // This is called with the results from from FB.getLoginStatus().
+        function statusChangeCallback(response) {
+            console.log('statusChangeCallback');
+            console.log(response);
+            // The response object is returned with a status field that lets the
+            // app know the current login status of the person.
+            // Full docs on the response object can be found in the documentation
+            // for FB.getLoginStatus().
+            if (response.status === 'connected') {
+                // Logged into your app and Facebook.
+                testAPI();
+                $.ajax({
+                    type: 'POST',
+                    url: '/user/login',
+                    data: {fb_token: response.authResponse.accessToken, userID: response.authResponse.userID},
+                    success: function (res, status, xhr) {
+                        window.location.replace("/dashboard");
+                    },
+                    error: function (xhr, status, err) {
+                        alert("Login failure: " + err);
+                    }
+                });
+            } else {
+                // The person is not logged into your app or we are unable to tell.
+                document.getElementById('status').innerHTML = 'Please log ' +
+                    'into this app.';
+            }
+        }
+
+        // Here we run a very simple test of the Graph API after login is
+        // successful.  See statusChangeCallback() for when this call is made.
+        function testAPI() {
+            console.log('Welcome!  Fetching your information.... ');
+            FB.api('/me', function (response) {
+                console.log("YEY");
+                console.log(response);
+                document.getElementById('status').innerHTML =
+                    'Thanks for logging in, ' + response.name + '!';
+            });
+        }
+
+        function checkLoginState() {
+            FB.getLoginStatus(function (response) {
+                statusChangeCallback(response);
+            });
+        }
+    </script>
+
+  <section class="module">
+    <div class="module-content">
+	<h1 class="page-heading">
+		{% block page_heading %}
+			{{ _('Log in') }}
+		{% endblock %}
+	</h1>
+{##}
+{#      <fieldset>#}
+{#        <legend><h4>{{ _('Log in with Google') }}</h4></legend>#}
+{#	<div id="g-signin-button">#}
+{#      		<span class="icon"></span>#}
+{#      		<span class="button-text">Google</span>#}
+{#	</div>#}
+{#      </fieldset>#}
+{#      <br /> <br />#}
+{#        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">#}
+{#        </fb:login-button>#}
+    <div scope="public_profile,email" onlogin="checkLoginState();" class="fb-login-button" data-width="190" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
+
+      <br><br>
+      <fieldset>
+        <legend>
+        {% set auth_text = _("Log in with your {site_title} account") %}
+        <h4>{{ auth_text.format(site_title=app_globals.site_title) }}</h4>
+        </legend>
+        {% block form %}
+          {% snippet "user/snippets/login_form.html", action=c.login_handler, error_summary=error_summary %}
+        {% endblock %}
+      </fieldset>
+    </div>
+  </section>
+{% endblock %}
