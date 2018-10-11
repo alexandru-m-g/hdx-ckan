@@ -26,6 +26,7 @@ script:
   - sleep 20
   - docker-compose restart ckan
   - docker-compose exec ckan echo $TRAVIS_BRANCH
+  - echo $COVERALLS_REPO_TOKEN
   - docker-compose exec ckan pip install --no-cache-dir -r /srv/ckan/dev-requirements.txt
   - docker-compose exec ckan python setup.py develop
   - docker-compose exec ckan hdxckantool plugins dev
@@ -40,7 +41,6 @@ script:
   - docker-compose exec ckan sh -c "mkdir -p /srv/filestore/storage/uploads/group"
   - docker-compose exec ckan sh -c "touch /srv/filestore/storage/uploads/group/david_thumbnail.png"
   - docker-compose exec ckan nosetests /srv/ckan/ckanext-hdx_org_group/ckanext/hdx_org_group/tests -ckan --with-pylons=ckanext-hdx_org_group/test.ini.sample --logging-level=ERROR --with-coverage --cover-package=ckanext
-  - docker-compose exec ckan coveralls
   
 after_success:
 - docker-compose exec ckan echo $TRAVIS_BRANCH
