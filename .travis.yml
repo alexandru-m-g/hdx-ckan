@@ -13,6 +13,8 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 script:
+  - echo "TRAVIS_JOB_ID=\"$TRAVIS_JOB_ID\"" >> .env
+  - echo "TRAVIS_BRANCH=\"$TRAVIS_BRANCH\"" >> .env
   - docker-compose build ckan
   - docker-compose up -d
   - sleep 10
