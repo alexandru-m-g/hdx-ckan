@@ -28,6 +28,7 @@ script:
   - sleep 20
   - docker-compose restart ckan
   - docker-compose exec ckan echo $TRAVIS_BRANCH
+  - docker-compose exec ckan echo $COVERALLS_REPO_TOKEN
   - docker-compose exec ckan pip install --no-cache-dir -r /srv/ckan/dev-requirements.txt
   - docker-compose exec ckan python setup.py develop
   - docker-compose exec ckan hdxckantool plugins dev
