@@ -2,6 +2,10 @@ sudo: required
 
 services:
   - docker
+  
+language: python
+python:
+  - "2.7"  
 
 env:
   DOCKER_COMPOSE_VERSION: 1.21.2
@@ -11,6 +15,7 @@ before_install:
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
+  - pip install coveralls
 
 script:
   - echo "TRAVIS_JOB_ID=\"$TRAVIS_JOB_ID\"" >> .env
@@ -42,7 +47,7 @@ script:
   - docker-compose exec ckan sh -c "mkdir -p /srv/filestore/storage/uploads/group"
   - docker-compose exec ckan sh -c "touch /srv/filestore/storage/uploads/group/david_thumbnail.png"
   - docker-compose exec ckan nosetests /srv/ckan/ckanext-hdx_org_group/ckanext/hdx_org_group/tests -ckan --with-pylons=ckanext-hdx_org_group/test.ini.sample --logging-level=ERROR --with-coverage --cover-package=ckanext
-  - docker-compose exec ckan coveralls  
+  - coveralls  
   
 after_success:
 - docker-compose exec ckan echo $TRAVIS_BRANCH
