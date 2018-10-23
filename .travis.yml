@@ -46,6 +46,7 @@ script:
   - docker-compose exec ckan nosetests /srv/ckan/ckanext-hdx_org_group/ckanext/hdx_org_group/tests -ckan --with-pylons=ckanext-hdx_org_group/test.ini.sample --logging-level=ERROR --with-coverage --cover-package=ckanext
   - docker-compose exec ckan nosetests /srv/ckan/ckanext-hdx_users/ckanext/hdx_users/tests -ckan --with-pylons=ckanext-hdx_users/test.ini.sample --logging-level=ERROR --with-coverage --cover-package=ckanext
   - docker-compose exec ckan ls -lha
+  - docker cp ckan:/srv/ckan/.coverage ./
 #   - docker-compose exec ckan coveralls
   - coveralls
   
