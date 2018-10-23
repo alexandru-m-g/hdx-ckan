@@ -48,6 +48,7 @@ script:
   - docker-compose exec ckan ls -lha
   - docker cp ckan:/srv/ckan/.coverage ./
 #   - docker-compose exec ckan coveralls
+  - ln -sf /home/travis/build/alexandru-m-g/hdx-ckan /srv/ckan
   - coveralls
   
 after_success:
