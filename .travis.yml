@@ -11,12 +11,24 @@ before_install:
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
-  - pip install --user coveralls
+#   - pip install --user coveralls
 
 script:
-#   - echo "TRAVIS_JOB_ID=\"$TRAVIS_JOB_ID\"" >> .env
-#   - echo "TRAVIS_BRANCH=\"$TRAVIS_BRANCH\"" >> .env
-#   - echo "TRAVIS=\"$TRAVIS\"" >> .env
+  - echo "TRAVIS_JOB_ID=\"$TRAVIS_JOB_ID\"" >> .env
+  - echo "TRAVIS_BRANCH=\"$TRAVIS_BRANCH\"" >> .env
+  - echo "TRAVIS=\"$TRAVIS\"" >> .env
+  - echo "CI=\"$CI\"" >> .env
+  - echo "CONTINUOUS_INTEGRATION=\"$CONTINUOUS_INTEGRATION\"" >> .env
+  - echo "TRAVIS_COMMIT=\"$TRAVIS_COMMIT\"" >> .env
+  - echo "TRAVIS_COMMIT_MESSAGE=\"$TRAVIS_COMMIT_MESSAGE\"" >> .env
+  - echo "TRAVIS_JOB_NUMBER=\"$TRAVIS_JOB_NUMBER\"" >> .env
+  - echo "TRAVIS_BUILD_ID=\"$TRAVIS_BUILD_ID\"" >> .env
+  - echo "TRAVIS_BUILD_NUMBER=\"$TRAVIS_BUILD_NUMBER\"" >> .env
+  - echo "TRAVIS_REPO_SLUG=\"$TRAVIS_REPO_SLUG\"" >> .env
+  - echo "TRAVIS_PULL_REQUEST=\"$TRAVIS_PULL_REQUEST\"" >> .env
+  - echo "TRAVIS_PULL_REQUEST_BRANCH=\"$TRAVIS_PULL_REQUEST_BRANCH\"" >> .env
+  - echo "TRAVIS_PULL_REQUEST_SHA=\"$TRAVIS_PULL_REQUEST_SHA\"" >> .env
+  - echo "TRAVIS_PULL_REQUEST_SLUG=\"$TRAVIS_PULL_REQUEST_SLUG\"" >> .env
 #   - echo "COVERALLS_REPO_TOKEN=\"$COVERALLS_REPO_TOKEN\"" >> .env
   - docker-compose build ckan
   - docker-compose up -d
@@ -47,9 +59,9 @@ script:
   - docker-compose exec ckan nosetests ./ckanext-hdx_users/ckanext/hdx_users/tests -ckan --with-pylons=ckanext-hdx_users/test.ini.sample --logging-level=ERROR --with-coverage --cover-package=ckanext.hdx_users
   - docker-compose exec ckan ls -lha
   - docker cp ckan:/srv/ckan/.coverage ./
-#   - docker-compose exec ckan coveralls
-  - ln -sf /home/travis/build/alexandru-m-g/hdx-ckan /srv/ckan
-  - coveralls
+  - docker-compose exec ckan coveralls
+#   - ln -sf /home/travis/build/alexandru-m-g/hdx-ckan /srv/ckan
+#   - coveralls
   
-after_success:
-- docker-compose exec ckan echo $TRAVIS_BRANCH  
+# after_success:
+# - docker-compose exec ckan echo $TRAVIS_BRANCH  
