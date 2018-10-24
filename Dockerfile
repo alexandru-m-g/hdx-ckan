@@ -87,7 +87,6 @@ RUN apt-get -qq -y update && \
     apt-get -y autoremove && \
     apt-get clean && \
     rm -rf \
-        .git \
         /root/.cache \
         /root/.npm \
         /usr/local/man \
