@@ -30,6 +30,8 @@ services:
     depends_on:
       - db
       - solr
+    env_file:
+      - travis.env
     environment:
       HDX_HOURS_MIXPANEL_CACHE: 1
       HDX_CKANDB_ADDR: 'dbckan'
@@ -57,13 +59,4 @@ services:
       HDX_SMTP_USER: ''
       HDX_SMTP_PASS: ''
       HDX_SMTP_TLS: 'False'
-      TRAVIS_JOB_ID
-      TRAVIS_BRANCH
-      TRAVIS
-      TRAVIS_COMMIT
-      TRAVIS_COMMIT_MESSAGE
-      TRAVIS_JOB_NUMBER
-      TRAVIS_BUILD_NUMBER
-      TRAVIS_BUILD_ID
-      CI
 
