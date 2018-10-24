@@ -40,8 +40,6 @@ script:
   - docker-compose restart solr
   - sleep 20
   - docker-compose restart ckan
-  - docker-compose exec ckan echo $TRAVIS_BRANCH
-  - docker-compose exec ckan echo $TRAVIS
   - docker-compose exec ckan pip install --no-cache-dir -r /srv/ckan/dev-requirements.txt
   - docker-compose exec ckan python setup.py develop
   - docker-compose exec ckan hdxckantool plugins dev
@@ -57,7 +55,9 @@ script:
   - docker-compose exec ckan sh -c "touch /srv/filestore/storage/uploads/group/david_thumbnail.png"
   - docker-compose exec ckan nosetests ./ckanext-hdx_org_group/ckanext/hdx_org_group/tests -ckan --with-pylons=ckanext-hdx_org_group/test.ini.sample --logging-level=ERROR --with-coverage --cover-package=ckanext.hdx_org_group
   - docker-compose exec ckan nosetests ./ckanext-hdx_users/ckanext/hdx_users/tests -ckan --with-pylons=ckanext-hdx_users/test.ini.sample --logging-level=ERROR --with-coverage --cover-package=ckanext.hdx_users
-  - docker-compose exec ckan ls -lha
+  - docker-compose exec ckan echo $TRAVIS_BRANCH
+  - docker-compose exec ckan echo $TRAVIS
+  - docker-compose exec ckan python -c 'import os;print os.environ.get("TRAVIS")'
   - docker cp ckan:/srv/ckan/.coverage ./
   - docker-compose exec ckan coveralls
 #   - ln -sf /home/travis/build/alexandru-m-g/hdx-ckan /srv/ckan
