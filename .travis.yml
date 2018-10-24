@@ -14,21 +14,21 @@ before_install:
 #   - pip install --user coveralls
 
 script:
-  - echo "TRAVIS_JOB_ID=\"$TRAVIS_JOB_ID\"" >> .env
-  - echo "TRAVIS_BRANCH=\"$TRAVIS_BRANCH\"" >> .env
-  - echo "TRAVIS=\"$TRAVIS\"" >> .env
-  - echo "CI=\"$CI\"" >> .env
-  - echo "CONTINUOUS_INTEGRATION=\"$CONTINUOUS_INTEGRATION\"" >> .env
-  - echo "TRAVIS_COMMIT=\"$TRAVIS_COMMIT\"" >> .env
-  - echo "TRAVIS_COMMIT_MESSAGE=\"$TRAVIS_COMMIT_MESSAGE\"" >> .env
-  - echo "TRAVIS_JOB_NUMBER=\"$TRAVIS_JOB_NUMBER\"" >> .env
-  - echo "TRAVIS_BUILD_ID=\"$TRAVIS_BUILD_ID\"" >> .env
-  - echo "TRAVIS_BUILD_NUMBER=\"$TRAVIS_BUILD_NUMBER\"" >> .env
-  - echo "TRAVIS_REPO_SLUG=\"$TRAVIS_REPO_SLUG\"" >> .env
-  - echo "TRAVIS_PULL_REQUEST=\"$TRAVIS_PULL_REQUEST\"" >> .env
-  - echo "TRAVIS_PULL_REQUEST_BRANCH=\"$TRAVIS_PULL_REQUEST_BRANCH\"" >> .env
-  - echo "TRAVIS_PULL_REQUEST_SHA=\"$TRAVIS_PULL_REQUEST_SHA\"" >> .env
-  - echo "TRAVIS_PULL_REQUEST_SLUG=\"$TRAVIS_PULL_REQUEST_SLUG\"" >> .env
+  - echo "TRAVIS_JOB_ID=\"$TRAVIS_JOB_ID\"" >> travis.env
+  - echo "TRAVIS_BRANCH=\"$TRAVIS_BRANCH\"" >> travis.env
+  - echo "TRAVIS=\"$TRAVIS\"" >> travis.env
+  - echo "CI=\"$CI\"" >> travis.env
+  - echo "CONTINUOUS_INTEGRATION=\"$CONTINUOUS_INTEGRATION\"" >> travis.env
+  - echo "TRAVIS_COMMIT=\"$TRAVIS_COMMIT\"" >> travis.env
+  - echo "TRAVIS_COMMIT_MESSAGE=\"$TRAVIS_COMMIT_MESSAGE\"" >> travis.env
+  - echo "TRAVIS_JOB_NUMBER=\"$TRAVIS_JOB_NUMBER\"" >> travis.env
+  - echo "TRAVIS_BUILD_ID=\"$TRAVIS_BUILD_ID\"" >> travis.env
+  - echo "TRAVIS_BUILD_NUMBER=\"$TRAVIS_BUILD_NUMBER\"" >> travis.env
+  - echo "TRAVIS_REPO_SLUG=\"$TRAVIS_REPO_SLUG\"" >> travis.env
+  - echo "TRAVIS_PULL_REQUEST=\"$TRAVIS_PULL_REQUEST\"" >> travis.env
+  - echo "TRAVIS_PULL_REQUEST_BRANCH=\"$TRAVIS_PULL_REQUEST_BRANCH\"" >> travis.env
+  - echo "TRAVIS_PULL_REQUEST_SHA=\"$TRAVIS_PULL_REQUEST_SHA\"" >> travis.env
+  - echo "TRAVIS_PULL_REQUEST_SLUG=\"$TRAVIS_PULL_REQUEST_SLUG\"" >> travis.env
 #   - echo "COVERALLS_REPO_TOKEN=\"$COVERALLS_REPO_TOKEN\"" >> .env
   - docker-compose build ckan
   - docker-compose up -d
@@ -58,7 +58,7 @@ script:
   - docker-compose exec ckan echo $TRAVIS_BRANCH
   - docker-compose exec ckan echo $TRAVIS
   - docker-compose exec ckan python -c 'import os;print os.environ.get("TRAVIS")'
-  - docker cp ckan:/srv/ckan/.coverage ./
+#   - docker cp ckan:/srv/ckan/.coverage ./
   - docker-compose exec ckan coveralls
 #   - ln -sf /home/travis/build/alexandru-m-g/hdx-ckan /srv/ckan
 #   - coveralls
