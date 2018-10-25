@@ -72,4 +72,3 @@ echo "done."
 # sudo -u buildkit buildkit repo remove -a $REPO_NAME dummy_arg
 # sudo -u buildkit buildkit repo add $REPO_NAME ${CKAN_PATH}/dist/buildkit/*.deb
 # echo "done."
-
